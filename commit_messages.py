@@ -42,7 +42,7 @@ answer = input("\napprove commit message? (y/n): ").strip().lower()
 print ("\n")
 
 if answer == "y":
-    subprocess.run(["git", "commit", "-m", commit_message], check=False)
+    subprocess.run(["git", "commit", "-m", commit_message], check=True)
     print("\nchanges committed with generated commit message")
 else:
     print("exited")
