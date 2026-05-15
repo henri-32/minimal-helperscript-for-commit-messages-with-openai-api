@@ -2,13 +2,13 @@
 set -euo pipefail
 
 script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-repo_root="$(cd "$script_dir/.." && pwd)"
+repo_root="$(git rev-parse --show-superproject-working-tree)"
 
 python3 -m venv "$repo_root/venv"
 "$repo_root/venv/bin/pip" install --upgrade pip
 "$repo_root/venv/bin/pip" install openai
 
-script_path="$repo_root/commit_messages.py"
+script_path="$script_dir/commit_messages.py"
 
 if [[ ! -f "$script_path" ]]; then
   echo "Error: expected script not found: $script_path" >&2
