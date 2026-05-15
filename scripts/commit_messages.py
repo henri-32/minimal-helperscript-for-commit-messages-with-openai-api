@@ -19,12 +19,16 @@ myinput = (
 )
 
 diff_proc = subprocess.Popen(
-    ["git", "diff", "--cached"],
+    ["git", "diff", "--cached", "--unified=0"],
     stdout=subprocess.PIPE,
     text=True,
 )
 
 diff, _ = diff_proc.communicate()
+
+if not diff.strip(): 
+    print("Nothing staged for commit") 
+    raise SystemExit(0) 
 
 print("openai call...\n"
     "commit message:\n") 

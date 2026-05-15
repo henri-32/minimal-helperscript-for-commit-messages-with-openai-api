@@ -2,7 +2,12 @@
 set -euo pipefail
 
 script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-repo_root="$(git rev-parse --show-superproject-working-tree)"
+if [ git rev-parse --show-superproject-working-tree ]; then 
+	repo_root=$(git rev-parse --show-superproject-working-tree)
+else 
+	repo_root=$(git rev-parse --show-toplevel)
+fi 
+
 
 python3 -m venv "$repo_root/venv"
 "$repo_root/venv/bin/pip" install --upgrade pip
