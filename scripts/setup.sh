@@ -2,9 +2,16 @@
 set -euo pipefail
 
 script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-if [ git rev-parse --show-superproject-working-tree ]; then 
-	repo_root=$(git rev-parse --show-superproject-working-tree)
 
+cd ..
+if repo_root="$(git rev-parse --show-toplevel 2>/dev/null)"; then 
+	echo "$repo_root" 
+	echo 'as superproject found'
+else
+	echo 'No superproject found' >&2 
+	exit 1
+	
+fi
 
 python3 -m venv "$repo_root/venv"
 "$repo_root/venv/bin/pip" install --upgrade pip
